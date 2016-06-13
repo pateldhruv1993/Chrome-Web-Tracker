@@ -1,0 +1,50 @@
+- [MAIN] Sockets don't work in chrome so you'll have to find some other way to transfer data and commands between the chrome extension and your app.
+    [Possible Solutions]
+        1) Make a Chrome APP instead of an extension. Hopefully chrome apps will have access to tabs and shit as well
+        2) Share command and data straight through the localstorage file. You can read localStorage.cmd from the extensino and save the "result" or "output" to localStorage.output and the c# app can read that stuff from the file. [Possible Problems] May be reading and writing on file that is being manipulated by both the extension and the c# app is not a really good idea. Might give out errors.
+        3) Seems like tcp servers can process or read http requests. So may be add code to make http requests to our server every couple of seconds and see if the server needs new logs.. https://developer.chrome.com/extensions/messaging
+
+
+- For the most part you'll just need to copy pasta code from the extension that you've forked from github
+
+
+/-------------------------
+    Program Flow
+/-------------------------
+
+
+- Process localStorage for saved serverAddress and port
+
+- First try to connect to the tcpServer
+  - If cannot connect, show a notification popup once and try to reconnect in couple of seconds
+    - If connected
+      - Exchange an handshake message with the c# app (MAYBE?)
+        - If handshake message failed, disonnect
+      - Bind your tcpData processing function to the onReceiveData of the tcp-client
+      
+
+- No matter if you can connect to tcpServer or not, start logging websites and time spent on them
+  - To track time, website url and tabId by binding your  function to chrome.onActivated event
+  - To track the end time of the said website and tabId bind your function to chrome.onRemoved or whatever
+
+
+
+
+/-------------------------
+    Data Objects
+/-------------------------
+
+- Data Object for each log
+  {
+  serialNo/tabId_for_the_session: maybe,
+  startTime: preferably UNIX time,
+  endTime: preferably UNIX time. NULL if tab still open. The value should be replaced with current UNIX
+            time if the value is NULL and 3rd party app requests for new log,
+  url: url of the website,
+  }
+
+- localStorage stuff
+   localStorage.tcpServerAddress
+   localStorage.tcpServerPort
+   localStorage.logJSON
+   localStorage.MaxEntries ? (Maybe if you wanna only keep like 200 values in logJSON)
