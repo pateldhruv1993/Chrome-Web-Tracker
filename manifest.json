@@ -4,7 +4,7 @@
   "description": "Keeps track of how much time you spend on various web sites.",
   "manifest_version": 2,
   "background": {
-    "scripts": ["tcp-client.js", "main.js"]
+    "scripts": ["jquery-3.0.0.min.js", "main.js"]
   },
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "permissions": [
@@ -13,10 +13,5 @@
   ],
   "browser_action": {
     "default_title": "Web Tracker"
-  },
-  "sockets": {
-    "tcp": {
-      "connect": "*:*"
-    }
   }
 }

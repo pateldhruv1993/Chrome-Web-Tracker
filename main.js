@@ -16,6 +16,57 @@ if(!localStorage.sites){
 
 
 
+// MAIN. Runs on document load
+$(function(){
+    var content = {};
+    for(var i = 0; i < 10 ; i++){
+        content[i] = {"name": "fagit", "surname": "fagit"};
+    }
+    sendDataToTCP(content);
+});
+
+
+function sendDataToTCP(content){
+    var request = $.ajax({
+      url: "http://" + localStorage.tcpServerAddress + ":" +localStorage.tcpServerPort,
+      method: "POST",
+      data: content,
+      dataType: "json"
+    });
+
+    request.done(function( receivedData ) {
+      console.log( receivedData );
+    });
+
+    request.fail(function( jqXHR, textStatus ) {
+      console.log( "Request failed: " + textStatus );
+    });
+}
+/*
+var http = new XMLHttpRequest();
+var url = "http://127.0.0.1:6969/";
+var params = "lorem=ipsum&name=binny";
+http.open("POST", url, true);
+
+//Send the proper header information along with the request
+http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+http.onreadystatechange = function() {//Call a function when the state changes.
+    if(http.readyState == 4 && http.status == 200) {
+        alert(http.responseText);
+    }
+}
+http.send(params);
+*/
+
+
+
+
+
+
+
+/*
+
 
 // Function to process commands from TCP Server
 function processTCPCommand(cmd){
@@ -45,7 +96,7 @@ function processTCPCommand(cmd){
 
 
 //TCP Client
-tcpClient = new TcpClient(localStorage.tcpServerAddress, parseInt(localStorage.tcpServerPort));
+//tcpClient = new TcpClient(localStorage.tcpServerAddress, parseInt(localStorage.tcpServerPort));
 
 
 tcpClient.connect(function(){
@@ -62,3 +113,4 @@ tcpClient.connect(function(){
 
 
 
+*/
