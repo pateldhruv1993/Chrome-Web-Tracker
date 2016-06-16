@@ -20,7 +20,7 @@ if(!localStorage.sites){
 $(function(){
     var content = {};
     for(var i = 0; i < 10 ; i++){
-        content[i] = {"name": "fagit", "surname": "fagit"};
+        content[i] = {"name": "fagi' - : t", "surname": "duma! fuckat"};
     }
     sendDataToTCP(content);
 });
@@ -37,28 +37,12 @@ function sendDataToTCP(content){
     request.done(function( receivedData ) {
       console.log( receivedData );
     });
-
+    
     request.fail(function( jqXHR, textStatus ) {
-      console.log( "Request failed: " + textStatus );
+        console.log( "Request failed: " + textStatus );
+        console.log("Probably the server isn't running.");
     });
 }
-/*
-var http = new XMLHttpRequest();
-var url = "http://127.0.0.1:6969/";
-var params = "lorem=ipsum&name=binny";
-http.open("POST", url, true);
-
-//Send the proper header information along with the request
-http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-http.onreadystatechange = function() {//Call a function when the state changes.
-    if(http.readyState == 4 && http.status == 200) {
-        alert(http.responseText);
-    }
-}
-http.send(params);
-*/
-
 
 
 

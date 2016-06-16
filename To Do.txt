@@ -1,4 +1,6 @@
 - Seems like sending the usual ajax requests work even with different port because our app is an extension. Also the server in node can get this data easily reading this data should not be too hard. Might need to do some string processing tho.
+
+- Although I've done some string processing, all in all looks like we should have a simple http server instead of a tcp server in our Procrast electron app. Because getting json data from chrome will require a whole lot mroe string processing on the current setup. Where as I think you can just have tcp client for the C# app and make it send data to the http server. It should work fine....
  [MAIN] Sockets don't work in chrome so you'll have to find some other way to transfer data and commands between the chrome extension and your app.
     [Possible Solutions]
         1) Make a Chrome APP instead of an extension. Hopefully chrome apps will have access to tabs and shit as well
