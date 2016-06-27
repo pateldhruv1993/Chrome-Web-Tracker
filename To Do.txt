@@ -1,15 +1,4 @@
-- Seems like sending the usual ajax requests work even with different port because our app is an extension. Also the server in node can get this data easily reading this data should not be too hard. Might need to do some string processing tho.
-
-- Although I've done some string processing, all in all looks like we should have a simple http server instead of a tcp server in our Procrast electron app. Because getting json data from chrome will require a whole lot mroe string processing on the current setup. Where as I think you can just have tcp client for the C# app and make it send data to the http server. It should work fine....
- [MAIN] Sockets don't work in chrome so you'll have to find some other way to transfer data and commands between the chrome extension and your app.
-    [Possible Solutions]
-        1) Make a Chrome APP instead of an extension. Hopefully chrome apps will have access to tabs and shit as well
-        2) Share command and data straight through the localstorage file. You can read localStorage.cmd from the extensino and save the "result" or "output" to localStorage.output and the c# app can read that stuff from the file. [Possible Problems] May be reading and writing on file that is being manipulated by both the extension and the c# app is not a really good idea. Might give out errors.
-        3) Seems like tcp servers can process or read http requests. So may be add code to make http requests to our server every couple of seconds and see if the server needs new logs.. https://developer.chrome.com/extensions/messaging
-
-
-- For the most part you'll just need to copy pasta code from the extension that you've forked from github
-
+- Start copying and pasting code from cloned extension. Don't uncomment the networking code till you've debuged and tested the site loggin system.
 
 /-------------------------
     Program Flow
@@ -21,7 +10,7 @@
 - First try to connect to the tcpServer
   - If cannot connect, show a notification popup once and try to reconnect in couple of seconds
     - If connected
-      - Exchange an handshake message with the c# app (MAYBE?)
+      - Exchange an handshake message with the electron app. (figure out to sync it with data from c# app in the electron app)
         - If handshake message failed, disonnect
       - Bind your tcpData processing function to the onReceiveData of the tcp-client
       
