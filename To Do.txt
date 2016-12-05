@@ -1,4 +1,7 @@
-- Start copying and pasting code from cloned extension. Don't uncomment the networking code till you've debuged and tested the site loggin system.
+- Use onUpdated() function of chrome to make logs for tabs that are opened and then redirected to a new page. For e.g.: when you open a "New Tab" and go to google or something our current code does not log the new google stuff.
+
+
+- Start copying and pasting code from cloned extension. Don't uncomment the networking code till you've debuged and tested the site login system.
 
 /-------------------------
     Program Flow
@@ -13,7 +16,7 @@
       - Exchange an handshake message with the electron app. (figure out to sync it with data from c# app in the electron app)
         - If handshake message failed, disonnect
       - Bind your tcpData processing function to the onReceiveData of the tcp-client
-      
+
 
 - No matter if you can connect to tcpServer or not, start logging websites and time spent on them
   - To track time, website url and tabId by binding your  function to chrome.onActivated event

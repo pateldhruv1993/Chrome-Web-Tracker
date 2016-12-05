@@ -48,12 +48,23 @@ function initListeners() {
 
     // Listener for when a tab is activated
     chrome.tabs.onActivated.addListener(function (activeTab) {
-        console.log(activeTab);
         chrome.tabs.get(activeTab.tabId, function (tab) {
-            console.log(tab.url);
+            console.log(generateLogLine("chrome::focus", tab.id, tab.title, tab.url));
         });
     });
 
+    // Listener for when a tab is created
+    chrome.tabs.onCreated.addListener(function (tab){
+        console.log(generateLogLine("chrome::created", tab.id, tab.title, tab.url));
+    });
+
+    // Listener for when a tab is created
+    chrome.tabs.onRemoved.addListener(function (tabId, removeInfo){
+        console.log(generateLogLine("chrome::closed", tabId, "", ""));
+    });
+
+    /*
+    //------- Assuming this code was to detect when the machine goes in "idle" mode. Commenting it out right now as I've found a better way to detect that in the C# Program.
 
 
     // Force a check of the idle state to ensure that we transition
@@ -66,7 +77,6 @@ function initListeners() {
         }
     });
 
-
     // Listener for idle and stuff
     chrome.idle.onStateChanged.addListener(function (idleState) {
         if (idleState == "active") {
@@ -77,8 +87,30 @@ function initListeners() {
             self._sites.setCurrentFocus(null);
         }
     });
+    */
 }
 
+
+function generateLogLine(status, tabId, tabTitle, tabUrl){
+    return generateDateTimeRFC() + "\t" + status + "\t" + tabId + "\t" + tabTitle + "\t" + tabUrl;
+}
+
+// This is the fucntion to create a timestamp that is similar to the one used by C# program so that I don't have to process chrome stuff differently
+function generateDateTimeRFC(){
+    var daysOfWeek = ["Sun","Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    var monthsOfYear = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    var now = new Date();
+    var datetime = daysOfWeek[now.getDay()] + ", " +
+                    now.getDate() + " " +
+                    monthsOfYear[now.getMonth()] + " " +
+                    now.getFullYear() + " " +
+                    now.getHours() + ":" +
+                    now.getMinutes() + ":" +
+                    now.getSeconds() + " " +
+                    "GMT";
+    return datetime;
+}
 
 
 /*----------------------------------------------------------
