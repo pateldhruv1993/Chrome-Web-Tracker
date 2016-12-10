@@ -1,4 +1,4 @@
-- Use onUpdated() function of chrome to make logs for tabs that are opened and then redirected to a new page. For e.g.: when you open a "New Tab" and go to google or something our current code does not log the new google stuff.
+- Opening a new tab and/or going to a link is causing a lot of repeated entries (all of them are not really exactly same. There might be some changes in "status" or "title" but for the most part one user event is creating multiple logs). Find a way to add a delay so that we can decide which one of the logs to keep and discard the other ones
 
 
 - Start copying and pasting code from cloned extension. Don't uncomment the networking code till you've debuged and tested the site login system.

@@ -63,6 +63,12 @@ function initListeners() {
         console.log(generateLogLine("chrome::closed", tabId, "", ""));
     });
 
+
+    // Listener for when the user goes to a new url in an already opened tabId
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab){
+        console.log(generateLogLine("chrome::updated", tabId, tab.title, tab.url));
+    });
+
     /*
     //------- Assuming this code was to detect when the machine goes in "idle" mode. Commenting it out right now as I've found a better way to detect that in the C# Program.
 
@@ -92,7 +98,9 @@ function initListeners() {
 
 
 function generateLogLine(status, tabId, tabTitle, tabUrl){
-    return generateDateTimeRFC() + "\t" + status + "\t" + tabId + "\t" + tabTitle + "\t" + tabUrl;
+    var timestamp = generateDateTimeRFC();
+    var returnObj = {logLine: timestamp + "\t" + status + "\t" + tabId + "\t" + tabTitle + "\t" + tabUrl, logObj: {timestamp: timestamp, status: status, tabId: tabId, tabTitle: tabTitle, tabUrl: tabUrl}};
+    return returnObj;
 }
 
 // This is the fucntion to create a timestamp that is similar to the one used by C# program so that I don't have to process chrome stuff differently
@@ -128,8 +136,8 @@ $(function () {
     var content = {};
     for (var i = 0; i < 10; i++) {
         content[i] = {
-            "name": "fagi' - : t"
-            , "surname": "duma! fuckat"
+            "name": "Dhruv"
+            , "surname": "Patel"
         };
     }
     sendDataToTCP(content);
